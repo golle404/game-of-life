@@ -2,6 +2,7 @@
 
 var path = require("path")
 var gulp = require("gulp");
+var watch = require("gulp-watch");
 var connect = require("gulp-connect"); //server
 var open = require("gulp-open"); //url in browser
 var browserify = require("browserify");
@@ -80,7 +81,7 @@ gulp.task("js", function(){
 	browserify(config.paths.mainJs)
 		.transform(reactify)
 		.bundle()
-		.on("error", console.error.bind(console))
+		.on("error", function(err){console.log(err)})
 		.pipe(source("bundle.js"))
 		.pipe(buffer())
 		.pipe(gulp.dest(config.paths.live + "/js"))

@@ -1,9 +1,199 @@
-.scss{
-	border: 4px dotted #ccc;
+$graph-height: 100px;
+$prim-color: #455a64;
+$prim-color-dark: #37474f;
+$live-color: #ff8f00;
+$newborn-color: #ffe082; 
+
+*{
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+body{
+	background-color: $prim-color;
+	font-family: Arial;
+}
+#app{
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+}
+.title a{
+	color: $live-color;
+    font-size: 22px;
+    font-family: monospace;
+    text-decoration: none;
+    &:hover{
+    	color: $newborn-color;
+    }
+}
+.grid{
+	display: block;
+	.row{
+		display: flex;
+		.cell{
+			position: relative;
+			display: block;
+			width: 12px;
+			height: 12px;
+			margin: 1px;
+			cursor: pointer;
+			&.dead{
+				background-color: $prim-color-dark;
+			}
+			&.live{
+				background-color: $live-color;
+			}
+			&.new{
+				background-color: $newborn-color;	
+			}
+		}
+	}
+}
+.controls{
 	padding: 10px;
-	background-color: #abcdef;
-	color: #feddef;
-	p{
-		color: maroon;
+}
+
+.blueprint{
+  background-color: $prim-color-dark;
+  background-image: linear-gradient(rgba(255,255,255,.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.3) 1px, transparent 1px);
+  background-size:20px 20px, 20px 20px;
+  background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px
+}
+.graph{
+  margin: 10px auto;
+  width: 100%;
+  min-width: 200px;
+  height: $graph-height;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.45);
+  @extend .blueprint;
+}
+.max{
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid #fff;
+  flex-basis: 100%;
+  flex-shrink: 1;
+}
+.bars{
+  width: 100%;
+  max-height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-basis: 1%;
+  flex-grow: 1;
+}
+.bar{
+  position: relative;
+  width: 1%;
+  background-color: $prim-color-dark;
+  order: -1;
+  &.mark:before{
+    content: attr(data-mark);
+    height: $graph-height;
+    border-left: 1px solid #fff;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    color: #fff;
+    font-size: x-small;
+    font-family: monospace;
+  }
+  .val{
+    width: 100%;
+    &:first-child{
+    	background-color: $newborn-color;
+    }
+    &:last-child{
+    	background-color: $live-color;
+    }
+  } 
+}
+.info{
+	display: flex;
+	color: #fff;
+	margin-bottom: 10px;
+	.info-box{
+		padding: 4px 8px;
+		font-size: small;
+    	font-family: monospace;
+    	&.total:before{
+    		content: "total cells:";
+    	}
+    	&.alive:before{
+    		content: "alive cells:";
+    	}
+    	&.newborn:before{
+    		content: "new-born cells:";
+    	}		
+    	&.gen:before{
+    		content: "generation:";
+    	}
+	}
+}
+.switch{
+	display: inline-flex;
+	align-items: flex-end;
+	.knob{
+		position: relative;
+		width: 50px;
+		height: 22px;
+		border-radius: 100px;
+		background-color: #fff;
+		&:before{
+			content: "";
+			display: block;
+			position: absolute;
+			left: 29px;
+			top: 1px;
+			width: 20px;
+			height: 20px;
+			border-radius: 100%;
+			background-color: $prim-color;
+			transition: left 250ms ease;
+		}
+	}
+	label{
+		display: block;
+		padding: 1px 4px;
+		transition: color 250ms ease;
+		cursor: pointer;
+	}
+	input[type=checkbox]{
+		display: none;
+		&~ .on-label{
+			color: lighten($prim-color, 30%);
+		}
+		&~ .off-label{
+			color: #fff;
+		}
+		&:checked{
+			&~ .on-label{
+				color: #fff;
+			}
+			&~ .off-label{
+				color: lighten($prim-color, 30%);
+			}
+			&~ .knob:before{
+				left: 1px;
+			}
+		}
+	}
+}
+.reset{
+	background-color: #fff;
+	color: $prim-color;
+	padding: 3px 8px;
+	display: inline-block;
+	float: right;
+	border-radius: 50px;
+	cursor: pointer;
+	&:hover{
+		color: #fff;
+		background-color: $prim-color-dark;
 	}
 }

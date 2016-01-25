@@ -1,7 +1,8 @@
-$ = jQuery = require("jquery");
+'use strict';
+
 var React = require("react");
 var ReactDOM = require("react-dom");
-var Home = require("./components/homePage.js");
+var Game = require("./components/Game.js");
 
 
-ReactDOM.render(<Home />, document.getElementById("app"));
+ReactDOM.render(<Game />, document.getElementById("app"));

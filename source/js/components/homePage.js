@@ -7,7 +7,7 @@ var Home = React.createClass({
 		return (
 			<div className="react">
 				<h1>React</h1>
-				<p>lipsum</p>
+				<p>lipsum tipsum</p>
 			</div>
 		);
 	}
