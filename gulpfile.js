@@ -11,6 +11,7 @@ var source = require("vinyl-source-stream");
 var buffer = require("vinyl-buffer");
 var less = require("gulp-less");
 var sass = require("gulp-sass");
+var autoprefixer = require('gulp-autoprefixer');
 var minify = require("gulp-cssnano");
 var uglify = require("gulp-uglify");
 var concat = require("gulp-concat");
@@ -20,7 +21,7 @@ var lint = require("gulp-eslint");
 var config = {
 	port: 8088,
 	devBaseUrl: "http://localhost",
-	paths:{
+	paths: {
 		html: "./source/*.html",
 		js: "./source/js/**/*.js",
 		css: {
@@ -55,7 +56,7 @@ var config = {
 };
 
 //dev server
-gulp.task("connect", function(){
+gulp.task("connect", function() {
 	connect.server({
 		root: ["live"],
 		port: config.port,
@@ -64,24 +65,28 @@ gulp.task("connect", function(){
 	})
 });
 //open browser
-gulp.task("open", ["connect"], function(){
+gulp.task("open", ["connect"], function() {
 	gulp.src("live/index.html")
-		.pipe(open({uri: config.devBaseUrl + ":" + config.port + "/"}))
+		.pipe(open({
+			uri: config.devBaseUrl + ":" + config.port + "/"
+		}))
 });
 
 //html
-gulp.task("html", function(){
+gulp.task("html", function() {
 	gulp.src(config.paths.html)
 		.pipe(gulp.dest(config.paths.live))
 		.pipe(connect.reload());
 });
 
 //js
-gulp.task("js", function(){
+gulp.task("js", function() {
 	browserify(config.paths.mainJs)
 		.transform(reactify)
 		.bundle()
-		.on("error", function(err){console.log(err)})
+		.on("error", function(err) {
+			console.log(err)
+		})
 		.pipe(source("bundle.js"))
 		.pipe(buffer())
 		.pipe(gulp.dest(config.paths.live + "/js"))
@@ -89,29 +94,33 @@ gulp.task("js", function(){
 });
 
 //css
-gulp.task("css", function(){
+gulp.task("css", function() {
 	gulp.src(config.paths.css.src)
 		.pipe(concat("main.css"))
+		.pipe(autoprefixer({
+			browsers: ['last 2 versions'],
+			cascade: false
+		}))
 		.pipe(gulp.dest(config.paths.css.dest))
 		.pipe(connect.reload());
 })
 
 //less
-gulp.task("less", function(){
+gulp.task("less", function() {
 	gulp.src(config.paths.less.src)
 		.pipe(less())
 		.pipe(gulp.dest(config.paths.less.dest))
 })
 
 //sass
-gulp.task("sass", function(){
+gulp.task("sass", function() {
 	gulp.src(config.paths.sass.src)
 		.pipe(sass())
 		.pipe(gulp.dest(config.paths.sass.dest))
 })
 
 //scss
-gulp.task("scss", function(){
+gulp.task("scss", function() {
 	gulp.src(config.paths.scss.src)
 		.pipe(sass())
 		.pipe(gulp.dest(config.paths.scss.dest))
@@ -121,14 +130,14 @@ gulp.task("scss", function(){
 gulp.task("styles", ["less", "sass", "scss", "css"]);
 
 //lint
-gulp.task("lint", function(){
+gulp.task("lint", function() {
 	return gulp.src(config.paths.js)
 		.pipe(lint("eslint.config.json"))
 		.pipe(lint.format());
 });
 
 //watch
-gulp.task("watch", function(){
+gulp.task("watch", function() {
 	gulp.watch(config.paths.html, ["html"]);
 	gulp.watch(config.paths.js, ["js", "lint"]);
 	gulp.watch(config.paths.css.watch, ["css"]);
@@ -138,34 +147,34 @@ gulp.task("watch", function(){
 });
 
 //build-html
-gulp.task("html-build", ["html"], function(){
+gulp.task("html-build", ["html"], function() {
 	gulp.src(config.paths.build.html)
 		.pipe(gulp.dest(config.paths.build.dest));
 });
 
 //build-js
-gulp.task("js-build", ["js"], function(){
+gulp.task("js-build", ["js"], function() {
 	gulp.src(config.paths.build.js)
 		.pipe(uglify())
 		.pipe(gulp.dest(config.paths.build.dest + "/js"));
 });
 
 //build-styles
-gulp.task("styles-build", ["styles"], function(){
+gulp.task("styles-build", ["styles"], function() {
 	gulp.src(config.paths.build.css)
 		.pipe(minify())
 		.pipe(gulp.dest(config.paths.build.dest + "/css"));
 });
 
 //build
-gulp.task("build",["html-build", "js-build", "styles-build"]);
+gulp.task("build", ["html-build", "js-build", "styles-build"]);
 
 //default
 gulp.task("default", ["html", "js", "styles", "lint", "open", "watch"]);
 
 
 //bootstrap-less
-gulp.task("bootstrap-less", function(){
+gulp.task("bootstrap-less", function() {
 	gulp.src("node_modules/bootstrap/less/**/*.less")
 		.pipe(gulp.dest("source/less/bootstrap"));
 })

@@ -1,30 +1,3 @@
-.css{
-	border: 4px solid black;
-	padding: 10px;
-	background-color: red;
-	color: #fff;
-}
-.css p {
-  color: #ccc;
-}
-.less {
-  border: 4px dashed red;
-  padding: 10px;
-  background-color: blue;
-  color: #ede7f6;
-}
-.less p {
-  color: #ff00ff;
-}
-
-.sass {
-  border: 4px solid gray;
-  padding: 10px;
-  background-color: orange;
-  color: #222; }
-  .sass p {
-    color: white; }
-
 * {
   padding: 0;
   margin: 0;
@@ -35,7 +8,11 @@ body {
   font-family: Arial; }
 
 #app {
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
   justify-content: center;
   margin-top: 20px; }
 
@@ -50,6 +27,8 @@ body {
 .grid {
   display: block; }
   .grid .row {
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex; }
     .grid .row .cell {
       position: relative;
@@ -79,8 +58,14 @@ body {
   width: 100%;
   min-width: 200px;
   height: 100px;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
   justify-content: center;
   box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.45); }
 
@@ -88,22 +73,38 @@ body {
   width: 100%;
   height: auto;
   border-bottom: 1px solid #fff;
+  -webkit-flex-basis: 100%;
+  -ms-flex-preferred-size: 100%;
   flex-basis: 100%;
+  -webkit-flex-shrink: 1;
+  -ms-flex-negative: 1;
   flex-shrink: 1; }
 
 .bars {
   width: 100%;
   max-height: 100%;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
   justify-content: flex-end;
+  -webkit-align-items: flex-end;
+  -ms-flex-align: end;
   align-items: flex-end;
+  -webkit-flex-basis: 1%;
+  -ms-flex-preferred-size: 1%;
   flex-basis: 1%;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
   flex-grow: 1; }
 
 .bar {
   position: relative;
   width: 1%;
   background-color: #37474f;
+  -webkit-order: -1;
+  -ms-flex-order: -1;
   order: -1; }
   .bar.mark:before {
     content: attr(data-mark);
@@ -123,6 +124,8 @@ body {
       background-color: #ff8f00; }
 
 .info {
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
   color: #fff;
   margin-bottom: 10px; }
@@ -140,7 +143,11 @@ body {
       content: "generation:"; }
 
 .switch {
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-align-items: flex-end;
+  -ms-flex-align: end;
   align-items: flex-end; }
   .switch .knob {
     position: relative;
