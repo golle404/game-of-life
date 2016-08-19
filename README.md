@@ -2,7 +2,7 @@
 
 [Live Preview](http://codepen.io/golle404/full/mVxdmQ/)
 
-DRINKTEREST is my impementation of FreeCodeCamp ["Build the Game of Life"](https://www.freecodecamp.com/challenges/build-the-game-of-life) challenge
+This is my impementation of FreeCodeCamp ["Build the Game of Life"](https://www.freecodecamp.com/challenges/build-the-game-of-life) challenge
 
 Read about [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) at Wikipedia
 
